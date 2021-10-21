@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Amicable Numbers</title>
+</head>
+
+<body>
+    <nav class="nav">Amicable Numbers!</nav>
+
+    <p>Please enter the two numbers:</p>
+    <form name="amicableNos"  onsubmit= "return areAmicable()">
+        <label for="first">First Number: </label>
+        <input id="firstNo" type="text" name="first"><br><br>
+
+        <label for="second">Second Number: </label>
+        <input id="secondNo" type="text" name="second"><br><br><br>
+
+        <button type="submit">Submit</button><br><br><br>
+    </form>
+
+    <div id="theNumbers"> </div>
+
+    <script language='javascript'>
+
+    divForFirstNo = [];
+    divForSecondNo = [];
+
+    function divisorsSum(z, arrForDiv) 
+    {
+        sum = 0;
+        for(i=2; i<Math.sqrt(z); i++) {
+            //if i is divisor of z
+            if(isAFactor(i, z)){
+                //if both divisors are the same add one of them to sum, else add both
+                if(i == z/i){
+                    arrForDiv.push(i);
+                    sum +=i;
+                }
+                else{
+                    arrForDiv.push(1);
+                    arrForDiv.push(i);
+                    arrForDiv.push(z/i);
+                    sum += i + z/i;
+                }
+            }
+        }
+        
+        //return sum of divisors so far plus 1 which was excluded before
+        return (1 + sum);
+    }
+        function isAFactor(x, y){
+                if (y%x == 0){
+                    return true;
+                }
+                else {
+                    return false;
+                } 
+        }
+        
+        function areAmicable() 
+        { 
+            firstNo = document.amicableNos.first.value;
+            secondNo = document.getElementById("secondNo").value;
+            
+            if (divisorsSum(secondNo, divForSecondNo) != firstNo && divisorsSum(firstNo, divForFirstNo) != secondNo){
+                document.getElementById("theNumbers").innerHTML = " The numbers " + firstNo + " and " + secondNo + " are not amicable.";
+                alert("The divisors for "+ firstNo + " are " + divForFirstNo + " and the divisors for " + secondNo + " are " + divForSecondNo);
+            }
+            else if(divisorsSum(secondNo, divForSecondNo) == firstNo && divisorsSum(firstNo, divForFirstNo) == secondNo) {
+                document.getElementById("theNumbers").innerHTML = "The numbers "+ firstNo+ " and "+ secondNo+ " are amicable."; 
+                alert("The divisors for "+ firstNo + " are " + divForFirstNo + " and the divisors for " + secondNo + " are " + divForSecondNo);
+            }
+            
+            
+            return false;
+        } 
+    </script>
+    
+
+    
+</body>
+</html>
